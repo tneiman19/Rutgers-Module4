@@ -1,0 +1,13 @@
+.answerButton{
+    background-color: #333;
+    color: white;
+    display: block;
+    width: 300px;
+    margin: 5px 0;
+    border-radius: 150px;
+}
+
+.answerButton:hover{
+    background-color: white;
+    color: #333;
+}
