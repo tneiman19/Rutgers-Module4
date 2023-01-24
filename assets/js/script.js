@@ -114,12 +114,12 @@ var renderQuestion = function (array, index) {
 answerArea.addEventListener("click", function (event) {
   var validClick = event.target.getAttribute("class");
   var answerCorrect = event.target.getAttribute("data-correct");
-  console.log(
-    "The target class attribute is:",
-    validClick,
-    "and the answer is:",
-    answerCorrect
-  );
+  // console.log(
+  //   "The target class attribute is:",
+  //   validClick,
+  //   "and the answer is:",
+  //   answerCorrect
+  // );
   if (validClick !== "answerButton") {
     return;
   } else {
@@ -163,12 +163,12 @@ function changeSectionVisibility(section, visibility) {
 
 //Use this function when the users runs out of time or questions
 function gameOver() {
-  recordScore();
   removeAllChildNodes(questionArea);
   removeAllChildNodes(answerArea);
   clearInterval(interval);
   changeSectionVisibility(gameArea, "hidden");
   changeSectionVisibility(startButton, "visible");
+  recordScore();
 }
 
 //This function is used to reset the variable values when the user tries to start a new game.
@@ -200,8 +200,6 @@ function recordScore() {
 
 //Used to render the scores to the score table
 function displayScore() {
-  var allScores = localStorage.getItem("Scores");
-  var arrayAllScores = JSON.parse(allScores);
   removeAllChildNodes(scoreTable);
   removeAllChildNodes(scoreTable);
 
@@ -216,24 +214,26 @@ function displayScore() {
   scoreTable.appendChild(TH2);
   TH3.textContent = 'Incorrect';
   scoreTable.appendChild(TH3);
-  TH4.textContent = 'Tme Left';
+  TH4.textContent = 'Time Left';
   scoreTable.appendChild(TH4);
 
-  for (var i = 0; i < arrayAllScores.length; i++) {
+  for (var i = 0; i < playerScores.length; i++) {
     var newTR = document.createElement("tr");
     var newTD1 = document.createElement("td");
     var newTD2 = document.createElement("td");
     var newTD3 = document.createElement("td");
     var newTD4 = document.createElement("td");
 
-    newTD1.textContent = arrayAllScores[i].name;
+    newTD1.textContent = playerScores[i].name;
     newTR.appendChild(newTD1);
-    newTD2.textContent = arrayAllScores[i].correctAnswers;
+    newTD2.textContent = playerScores[i].correctAnswers;
     newTR.appendChild(newTD2);
-    newTD3.textContent = arrayAllScores[i].incorrectAnswers;
+    newTD3.textContent = playerScores[i].incorrectAnswers;
     newTR.appendChild(newTD3);
-    newTD4.textContent = arrayAllScores[i].timeLeft;
+    newTD4.textContent = playerScores[i].timeLeft;
     newTR.appendChild(newTD4);
     scoreTable.appendChild(newTR);
   }
 }
+
+displayScore()
