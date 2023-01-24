@@ -5,11 +5,22 @@ var correctSpan = document.getElementById("correctSpan");
 var incorrectSpan = document.getElementById("incorrectSpan");
 var timerSpan = document.getElementById("timerSpan");
 var startButton = document.getElementById("startButton");
+var scoreTable = document.getElementById("scoresTable");
 var interval = 0;
 var wins = 0;
 var loss = 0;
 var timer = 0;
 var index = 0;
+var playerScores = checkLocalStorage();
+
+//Used to set the player scores value to a blank array or the objects stored in Local Storage
+function checkLocalStorage() {
+  if (localStorage.getItem("Scores") === null) {
+    return [];
+  } else {
+    return JSON.parse(localStorage.getItem("Scores"));
+  }
+}
 
 var questionArray = [
   {
@@ -133,6 +144,7 @@ function updateScore(text) {
   } else {
     loss++;
     incorrectSpan.textContent = loss;
+    timer = timer - 10;
     // alert("Incorrect");
   }
 }
@@ -151,6 +163,7 @@ function changeSectionVisibility(section, visibility) {
 
 //Use this function when the users runs out of time or questions
 function gameOver() {
+  recordScore();
   removeAllChildNodes(questionArea);
   removeAllChildNodes(answerArea);
   clearInterval(interval);
@@ -167,4 +180,60 @@ function reset() {
   index = 0;
   correctSpan.textContent = wins;
   incorrectSpan.textContent = loss;
+}
+
+function recordScore() {
+  var promptName = prompt(
+    "Nice Game!  Please enter your initials to save your score"
+  );
+  var newScore = {
+    name: promptName,
+    correctAnswers: wins,
+    incorrectAnswers: loss,
+    timeLeft: timer,
+  };
+  playerScores.push(newScore);
+  var stringPlayerScore = JSON.stringify(playerScores);
+  localStorage.setItem("Scores", stringPlayerScore);
+  displayScore();
+}
+
+//Used to render the scores to the score table
+function displayScore() {
+  var allScores = localStorage.getItem("Scores");
+  var arrayAllScores = JSON.parse(allScores);
+  removeAllChildNodes(scoreTable);
+  removeAllChildNodes(scoreTable);
+
+  var TH1 = document.createElement("th");
+  var TH2 = document.createElement("th");
+  var TH3 = document.createElement("th");
+  var TH4 = document.createElement("th");
+
+  TH1.textContent = 'Initials';
+  scoreTable.appendChild(TH1);
+  TH2.textContent = 'Correct';
+  scoreTable.appendChild(TH2);
+  TH3.textContent = 'Incorrect';
+  scoreTable.appendChild(TH3);
+  TH4.textContent = 'Tme Left';
+  scoreTable.appendChild(TH4);
+
+  for (var i = 0; i < arrayAllScores.length; i++) {
+    var newTR = document.createElement("tr");
+    var newTD1 = document.createElement("td");
+    var newTD2 = document.createElement("td");
+    var newTD3 = document.createElement("td");
+    var newTD4 = document.createElement("td");
+
+    newTD1.textContent = arrayAllScores[i].name;
+    newTR.appendChild(newTD1);
+    newTD2.textContent = arrayAllScores[i].correctAnswers;
+    newTR.appendChild(newTD2);
+    newTD3.textContent = arrayAllScores[i].incorrectAnswers;
+    newTR.appendChild(newTD3);
+    newTD4.textContent = arrayAllScores[i].timeLeft;
+    newTR.appendChild(newTD4);
+    scoreTable.appendChild(newTR);
+  }
 }

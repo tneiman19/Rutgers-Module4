@@ -1,81 +1,59 @@
+:root{
+  --darkColor:  #333;
+  --lightColor: white;
+}
+#infoCard, #gameArea, #scoreArea{
+    background-color: var(--darkColor);
+    color: var(--lightColor);
+    padding: 2vh;
+}
+
 #infoCard{
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    margin-top: 20vh;
-    margin-left: 30vh;
-    text-align: center;
-    padding: 10px;
-    width: 50vw;
-    background-color: #006699;
-    color: white;
-    border-radius: 2vh;
-    margin-bottom: 5px;
-}
-
-.gameBtn{
-    width: 5vw;
-    height: 5vh;
-}
-
-#gameArea{
-margin-left: 30vh;
-text-align: center;
-padding: 10px;
-width: 50vw;
-background-color: #006699;
-border-radius: 2vh;
-visibility: hidden;
+    justify-content: space-between;
 }
 
 #questionArea{
-    border: 5px solid white;
-    border-style: inset;
-    margin-bottom: 30px;
-    color: white;
-    
+    border: 1px solid var(--lightColor);
+    margin-bottom: 25px;
+    text-align: center;
 }
 
-#answerArea{
-    display: inline-flex;
-    flex-direction: column;
-
-   
-}
 .answerButton{
-    background-color: transparent;
+    display: flex;
+    width: 50vw;
+    margin-left: auto;
+    margin-right: auto;
     transition: background-color 1s;
     border-color: white;
-    font-size: medium;
-    color: white;
-    margin-bottom: 15px;
-    border-radius: 1vh;
-    
+    font-size: large;
+    color: var(--darkColor);
+    text-align: center;
+    margin-bottom: 15px; 
 }
 
-.answerButton:hover{
-    background-color: white;
-    color: #333;
-    cursor:pointer;
+#scoreArea{
+    text-align: center;
+}
+
+#scoresTable{
+    margin-left: auto;
+    margin-right: auto;
+    font-size: large;
+}
+
+th{ 
+    text-decoration: underline;
+    padding: 2vw
+}
+
+td{
+    border: 1px solid var(--lightColor);
 }
 
 @media (max-width: 1200px){
     #infoCard{
-        display: block;
-        margin-top: 10vh;
-        margin-left: 10vh;
-    }
-    #infoCard h1{
-        margin: 1%;
-
-    }
-
-    #gameArea{
-        display: inline-block;
-        margin-left: 10vh;
-    }
-    .gameBtn{
-        width: 75px;
-        height:25px;
+       flex-direction: column;
+       align-items: center;   
     }
 }
